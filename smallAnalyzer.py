@@ -174,9 +174,9 @@ def main() :
     # ##
     # ##
     
-    outFile = r.TFile("%s_%s.root"%(options.jobName,
-                                    options.outFileName
-                                    ),
+    outFile = r.TFile("%s_%s_v2.root"%(options.jobName,
+                                       options.outFileName
+                                       ),
                       "RECREATE")
     hpdInfo = setup_hpd_histograms(outFile)
     #print hpdInfo
@@ -288,7 +288,28 @@ def main() :
                 #else:
                 #    hpdInfo["rechitoccupancy"]["Endcap"]["rechits"] = hpdInfo["rechitoccupancy"]["Endcap"]["rechits"] + 1
 
-                if enVal > 1.5:
+                if enVal < 1.5:
+                    hpdInfo[thisHPDIndex]["hitsto15"] = hpdInfo[thisHPDIndex]["hitsto15"] + 1
+                    hpdInfo["rechitoccupancy"]["overall"]["rechitsto15"] = hpdInfo["rechitoccupancy"]["overall"]["rechitsto15"] + 1
+                    if plus:
+                        hpdInfo["rechitenergy"]["rechitsto15_energy_ieta%dp_d%d"%(absEta,theDepth)].Fill(enVal)
+                        hpdInfo["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d"%(absEta,theDepth)] = hpdInfo["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d"%(absEta,theDepth)] + 1
+                        if isBarrel:
+                            hpdInfo["rechitoccupancy"][0]["rechitsto15"] = hpdInfo["rechitoccupancy"][0]["rechitsto15"] + 1
+                        else:
+                            hpdInfo["rechitoccupancy"][2]["rechitsto15"] = hpdInfo["rechitoccupancy"][2]["rechitsto15"] + 1
+                    elif minus:
+                        hpdInfo["rechitenergy"]["rechitsto15_energy_ieta%dm_d%d"%(absEta,theDepth)].Fill(enVal)
+                        hpdInfo["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d"%(absEta,theDepth)] = hpdInfo["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d"%(absEta,theDepth)] + 1
+                        if isBarrel:
+                            hpdInfo["rechitoccupancy"][1]["rechitsto15"] = hpdInfo["rechitoccupancy"][1]["rechitsto15"] + 1
+                        else:
+                            hpdInfo["rechitoccupancy"][3]["rechitsto15"] = hpdInfo["rechitoccupancy"][3]["rechitsto15"] + 1
+                    # if isBarrel:
+                    #     hpdInfo["rechitoccupancy"]["Barrel"]["rechitsto15"] = hpdInfo["rechitoccupancy"]["Barrel"]["rechitsto15"] + 1
+                    # else:
+                    #     hpdInfo["rechitoccupancy"]["Endcap"]["rechitsto15"] = hpdInfo["rechitoccupancy"]["Endcap"]["rechitsto15"] + 1
+                elif enVal > 1.5:
                     hpdInfo[thisHPDIndex]["hits15"] = hpdInfo[thisHPDIndex]["hits15"] + 1
                     hpdInfo["rechitoccupancy"]["overall"]["rechits15"] = hpdInfo["rechitoccupancy"]["overall"]["rechits15"] + 1
                     if plus:
@@ -309,7 +330,28 @@ def main() :
                     #     hpdInfo["rechitoccupancy"]["Barrel"]["rechits15"] = hpdInfo["rechitoccupancy"]["Barrel"]["rechits15"] + 1
                     # else:
                     #     hpdInfo["rechitoccupancy"]["Endcap"]["rechits15"] = hpdInfo["rechitoccupancy"]["Endcap"]["rechits15"] + 1
-                    if enVal > 3.0:
+                    if enVal < 3.0:
+                        hpdInfo[thisHPDIndex]["hits15to30"] = hpdInfo[thisHPDIndex]["hits15to30"] + 1
+                        hpdInfo["rechitoccupancy"]["overall"]["rechits15to30"] = hpdInfo["rechitoccupancy"]["overall"]["rechits15to30"] + 1
+                        if plus:
+                            hpdInfo["rechitenergy"]["rechits15to30_energy_ieta%dp_d%d"%(absEta,theDepth)].Fill(enVal)
+                            hpdInfo["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d"%(absEta,theDepth)] = hpdInfo["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d"%(absEta,theDepth)] + 1
+                            if isBarrel:
+                                hpdInfo["rechitoccupancy"][0]["rechits15to30"] = hpdInfo["rechitoccupancy"][0]["rechits15to30"] + 1
+                            else:
+                                hpdInfo["rechitoccupancy"][2]["rechits15to30"] = hpdInfo["rechitoccupancy"][2]["rechits15to30"] + 1
+                        elif minus:
+                            hpdInfo["rechitenergy"]["rechits15to30_energy_ieta%dm_d%d"%(absEta,theDepth)].Fill(enVal)
+                            hpdInfo["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d"%(absEta,theDepth)] = hpdInfo["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d"%(absEta,theDepth)] + 1
+                            if isBarrel:
+                                hpdInfo["rechitoccupancy"][1]["rechits15to30"] = hpdInfo["rechitoccupancy"][1]["rechits15to30"] + 1
+                            else:
+                                hpdInfo["rechitoccupancy"][3]["rechits15to30"] = hpdInfo["rechitoccupancy"][3]["rechits15to30"] + 1
+                        # if isBarrel:
+                        #     hpdInfo["rechitoccupancy"]["Barrel"]["rechits15to30"] = hpdInfo["rechitoccupancy"]["Barrel"]["rechits15to30"] + 1
+                        # else:
+                        #     hpdInfo["rechitoccupancy"]["Endcap"]["rechits15to30"] = hpdInfo["rechitoccupancy"]["Endcap"]["rechits15to30"] + 1
+                    elif enVal > 3.0:
                         hpdInfo[thisHPDIndex]["hits30"] = hpdInfo[thisHPDIndex]["hits30"] + 1
                         hpdInfo["rechitoccupancy"]["overall"]["rechits30"] = hpdInfo["rechitoccupancy"]["overall"]["rechits30"] + 1
                         if plus:
@@ -330,7 +372,28 @@ def main() :
                         #     hpdInfo["rechitoccupancy"]["Barrel"]["rechits30"] = hpdInfo["rechitoccupancy"]["Barrel"]["rechits30"] + 1
                         # else:
                         #     hpdInfo["rechitoccupancy"]["Endcap"]["rechits30"] = hpdInfo["rechitoccupancy"]["Endcap"]["rechits30"] + 1
-                        if enVal > 5.0:
+                        if enVal < 5.0:
+                            hpdInfo[thisHPDIndex]["hits30to50"] = hpdInfo[thisHPDIndex]["hits30to50"] + 1
+                            hpdInfo["rechitoccupancy"]["overall"]["rechits30to50"] = hpdInfo["rechitoccupancy"]["overall"]["rechits30to50"] + 1
+                            if plus:
+                                hpdInfo["rechitenergy"]["rechits30to50_energy_ieta%dp_d%d"%(absEta,theDepth)].Fill(enVal)
+                                hpdInfo["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d"%(absEta,theDepth)] = hpdInfo["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d"%(absEta,theDepth)] + 1
+                                if isBarrel:
+                                    hpdInfo["rechitoccupancy"][0]["rechits30to50"] = hpdInfo["rechitoccupancy"][0]["rechits30to50"] + 1
+                                else:
+                                    hpdInfo["rechitoccupancy"][2]["rechits30to50"] = hpdInfo["rechitoccupancy"][2]["rechits30to50"] + 1
+                            elif minus:
+                                hpdInfo["rechitenergy"]["rechits30to50_energy_ieta%dm_d%d"%(absEta,theDepth)].Fill(enVal)
+                                hpdInfo["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d"%(absEta,theDepth)] = hpdInfo["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d"%(absEta,theDepth)] + 1
+                                if isBarrel:
+                                    hpdInfo["rechitoccupancy"][1]["rechits30to50"] = hpdInfo["rechitoccupancy"][1]["rechits30to50"] + 1
+                                else:
+                                    hpdInfo["rechitoccupancy"][3]["rechits30to50"] = hpdInfo["rechitoccupancy"][3]["rechits30to50"] + 1
+                            # if isBarrel:
+                            #     hpdInfo["rechitoccupancy"]["Barrel"]["rechits30to50"] = hpdInfo["rechitoccupancy"]["Barrel"]["rechits30to50"] + 1
+                            # else:
+                            #     hpdInfo["rechitoccupancy"]["Endcap"]["rechits30to50"] = hpdInfo["rechitoccupancy"]["Endcap"]["rechits30to50"] + 1
+                        elif enVal > 5.0:
                             hpdInfo[thisHPDIndex]["hits50"] = hpdInfo[thisHPDIndex]["hits50"] + 1
                             hpdInfo["rechitoccupancy"]["overall"]["rechits50"] = hpdInfo["rechitoccupancy"]["overall"]["rechits50"] + 1
                             if plus:
@@ -375,23 +438,38 @@ def setup_hpd_histograms(myFile):
     hpdInformation["rechitoccupancy"]["overall"]["rechits_vs_nvtx"] = r.TH2D("rechits_vs_nvtx",
                                                                              "rechits_vs_nvtx",
                                                                              60,-0.5,59.5,1000,-0.5,999.5)
+    hpdInformation["rechitoccupancy"]["overall"]["rechitsto15_vs_nvtx"] = r.TH2D("rechitsto15_vs_nvtx",
+                                                                                 "rechitsto15_vs_nvtx",
+                                                                                 60,-0.5,59.5,1000,-0.5,999.5)
     hpdInformation["rechitoccupancy"]["overall"]["rechits15_vs_nvtx"] = r.TH2D("rechits15_vs_nvtx",
                                                                                "rechits15_vs_nvtx",
                                                                                60,-0.5,59.5,1000,-0.5,999.5)
+    hpdInformation["rechitoccupancy"]["overall"]["rechits15to30_vs_nvtx"] = r.TH2D("rechits15to30_vs_nvtx",
+                                                                                   "rechits15to30_vs_nvtx",
+                                                                                   60,-0.5,59.5,1000,-0.5,999.5)
     hpdInformation["rechitoccupancy"]["overall"]["rechits30_vs_nvtx"] = r.TH2D("rechits30_vs_nvtx",
                                                                                "rechits30_vs_nvtx",
                                                                                60,-0.5,59.5,500,-0.5,499.5)
+    hpdInformation["rechitoccupancy"]["overall"]["rechits30to50_vs_nvtx"] = r.TH2D("rechits30to50_vs_nvtx",
+                                                                                   "rechits30to50_vs_nvtx",
+                                                                                   60,-0.5,59.5,500,-0.5,499.5)
     hpdInformation["rechitoccupancy"]["overall"]["rechits50_vs_nvtx"] = r.TH2D("rechits50_vs_nvtx",
                                                                                "rechits50_vs_nvtx",
                                                                                60,-0.5,59.5,300,-0.5,299.5)
     
     hpdInformation["rechitoccupancy"]["overall"]["rechits"]   = 0
+    hpdInformation["rechitoccupancy"]["overall"]["rechitsto15"] = 0
     hpdInformation["rechitoccupancy"]["overall"]["rechits15"] = 0
+    hpdInformation["rechitoccupancy"]["overall"]["rechits15to30"] = 0
     hpdInformation["rechitoccupancy"]["overall"]["rechits30"] = 0
+    hpdInformation["rechitoccupancy"]["overall"]["rechits30to50"] = 0
     hpdInformation["rechitoccupancy"]["overall"]["rechits50"] = 0
     hpdInformation["rechitoccupancy"]["overall"]["rechits_vs_nvtx"]  .Sumw2()
+    hpdInformation["rechitoccupancy"]["overall"]["rechitsto15_vs_nvtx"].Sumw2()
     hpdInformation["rechitoccupancy"]["overall"]["rechits15_vs_nvtx"].Sumw2()
+    hpdInformation["rechitoccupancy"]["overall"]["rechits15to30_vs_nvtx"].Sumw2()
     hpdInformation["rechitoccupancy"]["overall"]["rechits30_vs_nvtx"].Sumw2()
+    hpdInformation["rechitoccupancy"]["overall"]["rechits30to50_vs_nvtx"].Sumw2()
     hpdInformation["rechitoccupancy"]["overall"]["rechits50_vs_nvtx"].Sumw2()
     
     for be in ["Barrel","Endcap"]:
@@ -401,12 +479,21 @@ def setup_hpd_histograms(myFile):
         hpdInformation["rechitoccupancy"][be]["rechits_vs_nvtx"] = r.TH2D("rechits_vs_nvtx_%s"%(be),
                                                                           "rechits_vs_nvtx_%s"%(be),
                                                                           60,-0.5,59.5,1000,-0.5,999.5)
+        hpdInformation["rechitoccupancy"][be]["rechitsto15_vs_nvtx"] = r.TH2D("rechitsto15_vs_nvtx_%s"%(be),
+                                                                              "rechitsto15_vs_nvtx_%s"%(be),
+                                                                              60,-0.5,59.5,500,-0.5,499.5)
         hpdInformation["rechitoccupancy"][be]["rechits15_vs_nvtx"] = r.TH2D("rechits15_vs_nvtx_%s"%(be),
                                                                             "rechits15_vs_nvtx_%s"%(be),
                                                                             60,-0.5,59.5,500,-0.5,499.5)
+        hpdInformation["rechitoccupancy"][be]["rechits15to30_vs_nvtx"] = r.TH2D("rechits15to30_vs_nvtx_%s"%(be),
+                                                                                "rechits15to30_vs_nvtx_%s"%(be),
+                                                                                60,-0.5,59.5,500,-0.5,499.5)
         hpdInformation["rechitoccupancy"][be]["rechits30_vs_nvtx"] = r.TH2D("rechits30_vs_nvtx_%s"%(be),
                                                                             "rechits30_vs_nvtx_%s"%(be),
                                                                             60,-0.5,59.5,300,-0.5,299.5)
+        hpdInformation["rechitoccupancy"][be]["rechits30to50_vs_nvtx"] = r.TH2D("rechits30to50_vs_nvtx_%s"%(be),
+                                                                                "rechits30to50_vs_nvtx_%s"%(be),
+                                                                                60,-0.5,59.5,300,-0.5,299.5)
         hpdInformation["rechitoccupancy"][be]["rechits50_vs_nvtx"] = r.TH2D("rechits50_vs_nvtx_%s"%(be),
                                                                             "rechits50_vs_nvtx_%s"%(be),
                                                                             60,-0.5,59.5,200,-0.5,199.5)
@@ -416,8 +503,11 @@ def setup_hpd_histograms(myFile):
         #hpdInformation["rechitoccupancy"][be]["rechits30"] = 0
         #hpdInformation["rechitoccupancy"][be]["rechits50"] = 0
         hpdInformation["rechitoccupancy"][be]["rechits_vs_nvtx"]  .Sumw2()
+        hpdInformation["rechitoccupancy"][be]["rechitsto15_vs_nvtx"].Sumw2()
         hpdInformation["rechitoccupancy"][be]["rechits15_vs_nvtx"].Sumw2()
+        hpdInformation["rechitoccupancy"][be]["rechits15to30_vs_nvtx"].Sumw2()
         hpdInformation["rechitoccupancy"][be]["rechits30_vs_nvtx"].Sumw2()
+        hpdInformation["rechitoccupancy"][be]["rechits30to50_vs_nvtx"].Sumw2()
         hpdInformation["rechitoccupancy"][be]["rechits50_vs_nvtx"].Sumw2()
             
 
@@ -446,65 +536,107 @@ def setup_hpd_histograms(myFile):
             
             etaDir.cd()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                       "rechits_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                       60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                   "rechits_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                   60,-0.5,59.5,75,-0.5,74.5)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechitsto15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                       "rechitsto15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                       60,-0.5,59.5,75,-0.5,74.5)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         "rechits15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                     "rechits15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                     60,-0.5,59.5,75,-0.5,74.5)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits15to30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                         "rechits15to30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         "rechits30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                     "rechits30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                     60,-0.5,59.5,75,-0.5,74.5)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits30to50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                         "rechits30to50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         "rechits50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                     "rechits50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                     60,-0.5,59.5,75,-0.5,74.5)
             
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_d%d"%(ieta+1,depth+1)]   = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)]  .Sumw2()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                       "rechits_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                       60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                   "rechits_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                   60,-0.5,59.5,75,-0.5,74.5)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechitsto15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                       "rechitsto15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                       60,-0.5,59.5,75,-0.5,74.5)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         "rechits15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                     "rechits15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                     60,-0.5,59.5,75,-0.5,74.5)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits15to30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                         "rechits15to30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         "rechits30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                     "rechits30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                     60,-0.5,59.5,75,-0.5,74.5)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits30to50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                         "rechits30to50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         "rechits50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                         60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                     "rechits50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                     60,-0.5,59.5,75,-0.5,74.5)
             
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d"%(ieta+1,depth+1)]   = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)]  .Sumw2()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                      "rechits_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                      60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                  "rechits_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                  60,-0.5,59.5,75,-0.5,74.5)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechitsto15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                      "rechitsto15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                      60,-0.5,59.5,75,-0.5,74.5)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                        "rechits15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                        60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                    "rechits15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                    60,-0.5,59.5,75,-0.5,74.5)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits15to30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                        "rechits15to30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                        60,-0.5,59.5,75,-0.5,74.5)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                        "rechits30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                        60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                    "rechits30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                    60,-0.5,59.5,75,-0.5,74.5)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits30to50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                        "rechits30to50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                        60,-0.5,59.5,75,-0.5,74.5)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)] = r.TH2D("rechits50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                        "rechits50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
-                                                                                                        60,-0.5,59.5,75,-0.5,74.5)
+                                                                                                                    "rechits50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1),
+                                                                                                                    60,-0.5,59.5,75,-0.5,74.5)
             
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)]  .Sumw2()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Sumw2()
 
             # ## individual rechit energies
@@ -512,37 +644,61 @@ def setup_hpd_histograms(myFile):
             hpdInformation["rechitenergy"]["rechits_energy_ieta%dp_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits_energy_ieta%dp_d%d"%(ieta+1,depth+1),
                                                                                                    "rechits_energy_ieta%dp_d%d"%(ieta+1,depth+1),
                                                                                                    500,0,50)
+            hpdInformation["rechitenergy"]["rechitsto15_energy_ieta%dp_d%d"%(ieta+1,depth+1)] = r.TH1D("rechitsto15_energy_ieta%dp_d%d"%(ieta+1,depth+1),
+                                                                                                       "rechitsto15_energy_ieta%dp_d%d"%(ieta+1,depth+1),
+                                                                                                       500,0,50)
             hpdInformation["rechitenergy"]["rechits15_energy_ieta%dp_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits15_energy_ieta%dp_d%d"%(ieta+1,depth+1),
                                                                                                      "rechits15_energy_ieta%dp_d%d"%(ieta+1,depth+1),
                                                                                                      500,0,50)
+            hpdInformation["rechitenergy"]["rechits15to30_energy_ieta%dp_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits15to30_energy_ieta%dp_d%d"%(ieta+1,depth+1),
+                                                                                                         "rechits15to30_energy_ieta%dp_d%d"%(ieta+1,depth+1),
+                                                                                                         500,0,50)
             hpdInformation["rechitenergy"]["rechits30_energy_ieta%dp_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits30_energy_ieta%dp_d%d"%(ieta+1,depth+1),
                                                                                                      "rechits30_energy_ieta%dp_d%d"%(ieta+1,depth+1),
                                                                                                      500,0,50)
+            hpdInformation["rechitenergy"]["rechits30to50_energy_ieta%dp_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits30to50_energy_ieta%dp_d%d"%(ieta+1,depth+1),
+                                                                                                         "rechits30to50_energy_ieta%dp_d%d"%(ieta+1,depth+1),
+                                                                                                         500,0,50)
             hpdInformation["rechitenergy"]["rechits50_energy_ieta%dp_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits50_energy_ieta%dp_d%d"%(ieta+1,depth+1),
                                                                                                      "rechits50_energy_ieta%dp_d%d"%(ieta+1,depth+1),
                                                                                                      500,0,50)
             
             hpdInformation["rechitenergy"]["rechits_energy_ieta%dp_d%d"%(ieta+1,depth+1)]  .Sumw2()
+            hpdInformation["rechitenergy"]["rechitsto15_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitenergy"]["rechits15_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitenergy"]["rechits15to30_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitenergy"]["rechits30_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitenergy"]["rechits30to50_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitenergy"]["rechits50_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Sumw2()
             
             hpdInformation["rechitenergy"]["rechits_energy_ieta%dm_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits_energy_ieta%dm_d%d"%(ieta+1,depth+1),
                                                                                                    "rechits_energy_ieta%dm_d%d"%(ieta+1,depth+1),
                                                                                                    500,0,50)
+            hpdInformation["rechitenergy"]["rechitsto15_energy_ieta%dm_d%d"%(ieta+1,depth+1)] = r.TH1D("rechitsto15_energy_ieta%dm_d%d"%(ieta+1,depth+1),
+                                                                                                       "rechitsto15_energy_ieta%dm_d%d"%(ieta+1,depth+1),
+                                                                                                       500,0,50)
             hpdInformation["rechitenergy"]["rechits15_energy_ieta%dm_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits15_energy_ieta%dm_d%d"%(ieta+1,depth+1),
                                                                                                      "rechits15_energy_ieta%dm_d%d"%(ieta+1,depth+1),
                                                                                                      500,0,50)
+            hpdInformation["rechitenergy"]["rechits15to30_energy_ieta%dm_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits15to30_energy_ieta%dm_d%d"%(ieta+1,depth+1),
+                                                                                                         "rechits15to30_energy_ieta%dm_d%d"%(ieta+1,depth+1),
+                                                                                                         500,0,50)
             hpdInformation["rechitenergy"]["rechits30_energy_ieta%dm_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits30_energy_ieta%dm_d%d"%(ieta+1,depth+1),
                                                                                                      "rechits30_energy_ieta%dm_d%d"%(ieta+1,depth+1),
                                                                                                      500,0,50)
+            hpdInformation["rechitenergy"]["rechits30to50_energy_ieta%dm_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits30to50_energy_ieta%dm_d%d"%(ieta+1,depth+1),
+                                                                                                         "rechits30to50_energy_ieta%dm_d%d"%(ieta+1,depth+1),
+                                                                                                         500,0,50)
             hpdInformation["rechitenergy"]["rechits50_energy_ieta%dm_d%d"%(ieta+1,depth+1)] = r.TH1D("rechits50_energy_ieta%dm_d%d"%(ieta+1,depth+1),
                                                                                                      "rechits50_energy_ieta%dm_d%d"%(ieta+1,depth+1),
                                                                                                      500,0,50)
             
             hpdInformation["rechitenergy"]["rechits_energy_ieta%dm_d%d"%(ieta+1,depth+1)]  .Sumw2()
+            hpdInformation["rechitenergy"]["rechitsto15_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitenergy"]["rechits15_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitenergy"]["rechits15to30_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitenergy"]["rechits30_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Sumw2()
+            hpdInformation["rechitenergy"]["rechits30to50_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Sumw2()
             hpdInformation["rechitenergy"]["rechits50_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Sumw2()
             
 
@@ -551,55 +707,91 @@ def setup_hpd_histograms(myFile):
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_vs_nvtx"%(ieta+1)] = r.TH2D("rechits_ieta%dp_vs_nvtx"%(ieta+1),
                                                                                                    "rechits_ieta%dp_vs_nvtx"%(ieta+1),
                                                                                                    60,-0.5,59.5,250,-0.5,249.5)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_vs_nvtx"%(ieta+1)] = r.TH2D("rechitsto15_ieta%dp_vs_nvtx"%(ieta+1),
+                                                                                                       "rechitsto15_ieta%dp_vs_nvtx"%(ieta+1),
+                                                                                                       60,-0.5,59.5,250,-0.5,249.5)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_vs_nvtx"%(ieta+1)] = r.TH2D("rechits15_ieta%dp_vs_nvtx"%(ieta+1),
                                                                                                      "rechits15_ieta%dp_vs_nvtx"%(ieta+1),
                                                                                                      60,-0.5,59.5,250,-0.5,249.5)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_vs_nvtx"%(ieta+1)] = r.TH2D("rechits15to30_ieta%dp_vs_nvtx"%(ieta+1),
+                                                                                                         "rechits15to30_ieta%dp_vs_nvtx"%(ieta+1),
+                                                                                                         60,-0.5,59.5,250,-0.5,249.5)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_vs_nvtx"%(ieta+1)] = r.TH2D("rechits30_ieta%dp_vs_nvtx"%(ieta+1),
                                                                                                      "rechits30_ieta%dp_vs_nvtx"%(ieta+1),
                                                                                                      60,-0.5,59.5,250,-0.5,249.5)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_vs_nvtx"%(ieta+1)] = r.TH2D("rechits30to50_ieta%dp_vs_nvtx"%(ieta+1),
+                                                                                                         "rechits30to50_ieta%dp_vs_nvtx"%(ieta+1),
+                                                                                                         60,-0.5,59.5,250,-0.5,249.5)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_vs_nvtx"%(ieta+1)] = r.TH2D("rechits50_ieta%dp_vs_nvtx"%(ieta+1),
                                                                                                      "rechits50_ieta%dp_vs_nvtx"%(ieta+1),
                                                                                                      60,-0.5,59.5,250,-0.5,249.5)
         
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_vs_nvtx"%(ieta+1)]  .Sumw2()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_vs_nvtx"%(ieta+1)].Sumw2()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_vs_nvtx"%(ieta+1)].Sumw2()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_vs_nvtx"%(ieta+1)].Sumw2()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_vs_nvtx"%(ieta+1)].Sumw2()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_vs_nvtx"%(ieta+1)].Sumw2()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_vs_nvtx"%(ieta+1)].Sumw2()
         
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_vs_nvtx"%(ieta+1)] = r.TH2D("rechits_ieta%dm_vs_nvtx"%(ieta+1),
                                                                                                    "rechits_ieta%dm_vs_nvtx"%(ieta+1),
                                                                                                    60,-0.5,59.5,250,-0.5,249.5)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_vs_nvtx"%(ieta+1)] = r.TH2D("rechitsto15_ieta%dm_vs_nvtx"%(ieta+1),
+                                                                                                       "rechitsto15_ieta%dm_vs_nvtx"%(ieta+1),
+                                                                                                       60,-0.5,59.5,250,-0.5,249.5)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_vs_nvtx"%(ieta+1)] = r.TH2D("rechits15_ieta%dm_vs_nvtx"%(ieta+1),
                                                                                                      "rechits15_ieta%dm_vs_nvtx"%(ieta+1),
                                                                                                      60,-0.5,59.5,250,-0.5,249.5)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_vs_nvtx"%(ieta+1)] = r.TH2D("rechits15to30_ieta%dm_vs_nvtx"%(ieta+1),
+                                                                                                         "rechits15to30_ieta%dm_vs_nvtx"%(ieta+1),
+                                                                                                         60,-0.5,59.5,250,-0.5,249.5)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_vs_nvtx"%(ieta+1)] = r.TH2D("rechits30_ieta%dm_vs_nvtx"%(ieta+1),
                                                                                                      "rechits30_ieta%dm_vs_nvtx"%(ieta+1),
                                                                                                      60,-0.5,59.5,250,-0.5,249.5)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_vs_nvtx"%(ieta+1)] = r.TH2D("rechits30to50_ieta%dm_vs_nvtx"%(ieta+1),
+                                                                                                         "rechits30to50_ieta%dm_vs_nvtx"%(ieta+1),
+                                                                                                         60,-0.5,59.5,250,-0.5,249.5)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_vs_nvtx"%(ieta+1)] = r.TH2D("rechits50_ieta%dm_vs_nvtx"%(ieta+1),
                                                                                                      "rechits50_ieta%dm_vs_nvtx"%(ieta+1),
                                                                                                      60,-0.5,59.5,250,-0.5,249.5)
         
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_vs_nvtx"%(ieta+1)]  .Sumw2()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_vs_nvtx"%(ieta+1)].Sumw2()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_vs_nvtx"%(ieta+1)].Sumw2()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_vs_nvtx"%(ieta+1)].Sumw2()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_vs_nvtx"%(ieta+1)].Sumw2()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_vs_nvtx"%(ieta+1)].Sumw2()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_vs_nvtx"%(ieta+1)].Sumw2()
         
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%d_vs_nvtx"%(ieta+1)] = r.TH2D("rechits_ieta%d_vs_nvtx"%(ieta+1),
                                                                                                   "rechits_ieta%d_vs_nvtx"%(ieta+1),
                                                                                                   60,-0.5,59.5,250,-0.5,249.5)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%d_vs_nvtx"%(ieta+1)] = r.TH2D("rechitsto15_ieta%d_vs_nvtx"%(ieta+1),
+                                                                                                      "rechitsto15_ieta%d_vs_nvtx"%(ieta+1),
+                                                                                                      60,-0.5,59.5,250,-0.5,249.5)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%d_vs_nvtx"%(ieta+1)] = r.TH2D("rechits15_ieta%d_vs_nvtx"%(ieta+1),
                                                                                                     "rechits15_ieta%d_vs_nvtx"%(ieta+1),
                                                                                                     60,-0.5,59.5,250,-0.5,249.5)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%d_vs_nvtx"%(ieta+1)] = r.TH2D("rechits15to30_ieta%d_vs_nvtx"%(ieta+1),
+                                                                                                        "rechits15to30_ieta%d_vs_nvtx"%(ieta+1),
+                                                                                                        60,-0.5,59.5,250,-0.5,249.5)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%d_vs_nvtx"%(ieta+1)] = r.TH2D("rechits30_ieta%d_vs_nvtx"%(ieta+1),
                                                                                                     "rechits30_ieta%d_vs_nvtx"%(ieta+1),
                                                                                                     60,-0.5,59.5,250,-0.5,249.5)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%d_vs_nvtx"%(ieta+1)] = r.TH2D("rechits30to50_ieta%d_vs_nvtx"%(ieta+1),
+                                                                                                        "rechits30to50_ieta%d_vs_nvtx"%(ieta+1),
+                                                                                                        60,-0.5,59.5,250,-0.5,249.5)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%d_vs_nvtx"%(ieta+1)] = r.TH2D("rechits50_ieta%d_vs_nvtx"%(ieta+1),
                                                                                                     "rechits50_ieta%d_vs_nvtx"%(ieta+1),
                                                                                                     60,-0.5,59.5,250,-0.5,249.5)
         
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%d_vs_nvtx"%(ieta+1)]  .Sumw2()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%d_vs_nvtx"%(ieta+1)].Sumw2()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%d_vs_nvtx"%(ieta+1)].Sumw2()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%d_vs_nvtx"%(ieta+1)].Sumw2()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%d_vs_nvtx"%(ieta+1)].Sumw2()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%d_vs_nvtx"%(ieta+1)].Sumw2()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%d_vs_nvtx"%(ieta+1)].Sumw2()
         
         
@@ -613,23 +805,38 @@ def setup_hpd_histograms(myFile):
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits_vs_nvtx"] = r.TH2D("rechits_vs_nvtx_%s"%(subdet),
                                                                                      "rechits_vs_nvtx_%s"%(subdet),
                                                                                      60,-0.5,59.5,500,-0.5,499.5)
+            hpdInformation["rechitoccupancy"][subdetIdx]["rechitsto15_vs_nvtx"] = r.TH2D("rechitsto15_vs_nvtx_%s"%(subdet),
+                                                                                         "rechitsto15_vs_nvtx_%s"%(subdet),
+                                                                                         60,-0.5,59.5,500,-0.5,499.5)
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits15_vs_nvtx"] = r.TH2D("rechits15_vs_nvtx_%s"%(subdet),
                                                                                        "rechits15_vs_nvtx_%s"%(subdet),
                                                                                        60,-0.5,59.5,500,-0.5,499.5)
+            hpdInformation["rechitoccupancy"][subdetIdx]["rechits15to30_vs_nvtx"] = r.TH2D("rechits15to30_vs_nvtx_%s"%(subdet),
+                                                                                           "rechits15to30_vs_nvtx_%s"%(subdet),
+                                                                                           60,-0.5,59.5,500,-0.5,499.5)
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits30_vs_nvtx"] = r.TH2D("rechits30_vs_nvtx_%s"%(subdet),
                                                                                        "rechits30_vs_nvtx_%s"%(subdet),
                                                                                        60,-0.5,59.5,300,-0.5,299.5)
+            hpdInformation["rechitoccupancy"][subdetIdx]["rechits30to50_vs_nvtx"] = r.TH2D("rechits30to50_vs_nvtx_%s"%(subdet),
+                                                                                           "rechits30to50_vs_nvtx_%s"%(subdet),
+                                                                                           60,-0.5,59.5,300,-0.5,299.5)
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits50_vs_nvtx"] = r.TH2D("rechits50_vs_nvtx_%s"%(subdet),
                                                                                        "rechits50_vs_nvtx_%s"%(subdet),
                                                                                        60,-0.5,59.5,200,-0.5,199.5)
             
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits"]   = 0
+            hpdInformation["rechitoccupancy"][subdetIdx]["rechitsto15"] = 0
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits15"] = 0
+            hpdInformation["rechitoccupancy"][subdetIdx]["rechits15to30"] = 0
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits30"] = 0
+            hpdInformation["rechitoccupancy"][subdetIdx]["rechits30to50"] = 0
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits50"] = 0
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits_vs_nvtx"]  .Sumw2()
+            hpdInformation["rechitoccupancy"][subdetIdx]["rechitsto15_vs_nvtx"].Sumw2()
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits15_vs_nvtx"].Sumw2()
+            hpdInformation["rechitoccupancy"][subdetIdx]["rechits15to30_vs_nvtx"].Sumw2()
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits30_vs_nvtx"].Sumw2()
+            hpdInformation["rechitoccupancy"][subdetIdx]["rechits30to50_vs_nvtx"].Sumw2()
             hpdInformation["rechitoccupancy"][subdetIdx]["rechits50_vs_nvtx"].Sumw2()
 
             hpdDir.cd()
@@ -638,20 +845,32 @@ def setup_hpd_histograms(myFile):
             hpdInformation["summary"][subdetIdx]["hits_vs_nvtx"] = r.TH2D("hits_vs_nvtx_%s"%(subdet),
                                                                           "hits_vs_nvtx_%s"%(subdet),
                                                                           60,-0.5,59.5,20,-0.5,19.5)
+            hpdInformation["summary"][subdetIdx]["hitsto15_vs_nvtx"] = r.TH2D("hitsto15_vs_nvtx_%s"%(subdet),
+                                                                              "hitsto15_vs_nvtx_%s"%(subdet),
+                                                                              60,-0.5,59.5,20,-0.5,19.5)
             hpdInformation["summary"][subdetIdx]["hits15_vs_nvtx"] = r.TH2D("hits15_vs_nvtx_%s"%(subdet),
                                                                             "hits15_vs_nvtx_%s"%(subdet),
                                                                             60,-0.5,59.5,20,-0.5,19.5)
+            hpdInformation["summary"][subdetIdx]["hits15to30_vs_nvtx"] = r.TH2D("hits15to30_vs_nvtx_%s"%(subdet),
+                                                                                "hits15to30_vs_nvtx_%s"%(subdet),
+                                                                                60,-0.5,59.5,20,-0.5,19.5)
             hpdInformation["summary"][subdetIdx]["hits30_vs_nvtx"] = r.TH2D("hits30_vs_nvtx_%s"%(subdet),
                                                                             "hits30_vs_nvtx_%s"%(subdet),
                                                                             60,-0.5,59.5,20,-0.5,19.5)
+            hpdInformation["summary"][subdetIdx]["hits30to50_vs_nvtx"] = r.TH2D("hits30to50_vs_nvtx_%s"%(subdet),
+                                                                                "hits30to50_vs_nvtx_%s"%(subdet),
+                                                                                60,-0.5,59.5,20,-0.5,19.5)
             hpdInformation["summary"][subdetIdx]["hits50_vs_nvtx"] = r.TH2D("hits50_vs_nvtx_%s"%(subdet),
                                                                             "hits50_vs_nvtx_%s"%(subdet),
                                                                             60,-0.5,59.5,20,-0.5,19.5)
             
 
             hpdInformation["summary"][subdetIdx]["hits_vs_nvtx"]  .Sumw2()
+            hpdInformation["summary"][subdetIdx]["hitsto15_vs_nvtx"].Sumw2()
             hpdInformation["summary"][subdetIdx]["hits15_vs_nvtx"].Sumw2()
+            hpdInformation["summary"][subdetIdx]["hits15to30_vs_nvtx"].Sumw2()
             hpdInformation["summary"][subdetIdx]["hits30_vs_nvtx"].Sumw2()
+            hpdInformation["summary"][subdetIdx]["hits30to50_vs_nvtx"].Sumw2()
             hpdInformation["summary"][subdetIdx]["hits50_vs_nvtx"].Sumw2()
             subdetIdx = subdetIdx + 1
             
@@ -666,22 +885,37 @@ def setup_hpd_histograms(myFile):
                     hpdInformation[hpdIdx]["hits_vs_nvtx"] = r.TH2D("hits_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
                                                                                     "hits_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
                                                                                     60,-0.5,59.5,20,-0.5,19.5)
+                    hpdInformation[hpdIdx]["hitsto15_vs_nvtx"] = r.TH2D("hitsto15_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
+                                                                                    "hitsto15_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
+                                                                                    60,-0.5,59.5,20,-0.5,19.5)
                     hpdInformation[hpdIdx]["hits15_vs_nvtx"] = r.TH2D("hits15_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
                                                                                     "hits15_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
                                                                                     60,-0.5,59.5,20,-0.5,19.5)
+                    hpdInformation[hpdIdx]["hits15to30_vs_nvtx"] = r.TH2D("hits15to30_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
+                                                                                    "hits15to30_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
+                                                                                    60,-0.5,59.5,20,-0.5,19.5)
                     hpdInformation[hpdIdx]["hits30_vs_nvtx"] = r.TH2D("hits30_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
                                                                                     "hits30_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
+                                                                                    60,-0.5,59.5,20,-0.5,19.5)
+                    hpdInformation[hpdIdx]["hits30to50_vs_nvtx"] = r.TH2D("hits30to50_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
+                                                                                    "hits30to50_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
                                                                                     60,-0.5,59.5,20,-0.5,19.5)
                     hpdInformation[hpdIdx]["hits50_vs_nvtx"] = r.TH2D("hits50_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
                                                                                     "hits50_vs_nvtx_%s_HPD%d"%(keyName,hpd+1),
                                                                                     60,-0.5,59.5,20,-0.5,19.5)
                     hpdInformation[hpdIdx]["hits"]   = 0
+                    hpdInformation[hpdIdx]["hitsto15"] = 0
                     hpdInformation[hpdIdx]["hits15"] = 0
+                    hpdInformation[hpdIdx]["hits15to30"] = 0
                     hpdInformation[hpdIdx]["hits30"] = 0
+                    hpdInformation[hpdIdx]["hits30to50"] = 0
                     hpdInformation[hpdIdx]["hits50"] = 0
                     hpdInformation[hpdIdx]["hits_vs_nvtx"]  .Sumw2()
+                    hpdInformation[hpdIdx]["hitsto15_vs_nvtx"].Sumw2()
                     hpdInformation[hpdIdx]["hits15_vs_nvtx"].Sumw2()
+                    hpdInformation[hpdIdx]["hits15to30_vs_nvtx"].Sumw2()
                     hpdInformation[hpdIdx]["hits30_vs_nvtx"].Sumw2()
+                    hpdInformation[hpdIdx]["hits30to50_vs_nvtx"].Sumw2()
                     hpdInformation[hpdIdx]["hits50_vs_nvtx"].Sumw2()
                     #hpdInformation[keyName+"_HPD%d"%(hpd)][""] = 
                     #hpdInformation[keyName+"_HPD%d"%(hpd)][""] = 
@@ -694,8 +928,11 @@ def setup_hpd_histograms(myFile):
 def reset_hpd_counters(hpdInformation):
     r.gROOT.SetBatch(True)
     hpdInformation["rechitoccupancy"]["overall"]["rechits"]   = 0
+    hpdInformation["rechitoccupancy"]["overall"]["rechitsto15"] = 0
     hpdInformation["rechitoccupancy"]["overall"]["rechits15"] = 0
+    hpdInformation["rechitoccupancy"]["overall"]["rechits15to30"] = 0
     hpdInformation["rechitoccupancy"]["overall"]["rechits30"] = 0
+    hpdInformation["rechitoccupancy"]["overall"]["rechits30to50"] = 0
     hpdInformation["rechitoccupancy"]["overall"]["rechits50"] = 0
 
     #for be in ["Barrel","Endcap"]:
@@ -706,8 +943,11 @@ def reset_hpd_counters(hpdInformation):
 
     for subdetIdx in range(4):
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits"]   = 0
+        hpdInformation["rechitoccupancy"][subdetIdx]["rechitsto15"] = 0
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits15"] = 0
+        hpdInformation["rechitoccupancy"][subdetIdx]["rechits15to30"] = 0
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits30"] = 0
+        hpdInformation["rechitoccupancy"][subdetIdx]["rechits30to50"] = 0
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits50"] = 0
     
     for ieta in range(29):
@@ -731,13 +971,19 @@ def reset_hpd_counters(hpdInformation):
             # iEta 16,27,28 have max depth==3
 
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_d%d"%(ieta+1,depth+1)]   = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_d%d"%(ieta+1,depth+1)] = 0
             
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d"%(ieta+1,depth+1)]   = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d"%(ieta+1,depth+1)] = 0
 
         ##hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%d"%(ieta+1)]   = 0
@@ -747,8 +993,11 @@ def reset_hpd_counters(hpdInformation):
 
     for hpdIndex in range(288):
         hpdInformation[hpdIndex]["hits"]   = 0
+        hpdInformation[hpdIndex]["hitsto15"] = 0
         hpdInformation[hpdIndex]["hits15"] = 0
+        hpdInformation[hpdIndex]["hits15to30"] = 0
         hpdInformation[hpdIndex]["hits30"] = 0
+        hpdInformation[hpdIndex]["hits30to50"] = 0
         hpdInformation[hpdIndex]["hits50"] = 0
 
     return hpdInformation
@@ -756,20 +1005,29 @@ def reset_hpd_counters(hpdInformation):
 
 def fill_hpd_histograms(hpdInformation,nVtx):
     r.gROOT.SetBatch(True)
-    hits   = hpdInformation["rechitoccupancy"]["overall"]["rechits"] 
-    hits15 = hpdInformation["rechitoccupancy"]["overall"]["rechits15"]
-    hits30 = hpdInformation["rechitoccupancy"]["overall"]["rechits30"]
-    hits50 = hpdInformation["rechitoccupancy"]["overall"]["rechits50"]
+    hits       = hpdInformation["rechitoccupancy"]["overall"]["rechits"] 
+    hitsto15   = hpdInformation["rechitoccupancy"]["overall"]["rechitsto15"]
+    hits15     = hpdInformation["rechitoccupancy"]["overall"]["rechits15"]
+    hits15to30 = hpdInformation["rechitoccupancy"]["overall"]["rechits15to30"]
+    hits30     = hpdInformation["rechitoccupancy"]["overall"]["rechits30"]
+    hits30to50 = hpdInformation["rechitoccupancy"]["overall"]["rechits30to50"]
+    hits50     = hpdInformation["rechitoccupancy"]["overall"]["rechits50"]
 
     hpdInformation["rechitoccupancy"]["overall"]["rechits_vs_nvtx"]  .Fill(nVtx,hits)
+    hpdInformation["rechitoccupancy"]["overall"]["rechitsto15_vs_nvtx"].Fill(nVtx,hitsto15)
     hpdInformation["rechitoccupancy"]["overall"]["rechits15_vs_nvtx"].Fill(nVtx,hits15)
+    hpdInformation["rechitoccupancy"]["overall"]["rechits15to30_vs_nvtx"].Fill(nVtx,hits15to30)
     hpdInformation["rechitoccupancy"]["overall"]["rechits30_vs_nvtx"].Fill(nVtx,hits30)
+    hpdInformation["rechitoccupancy"]["overall"]["rechits30to50_vs_nvtx"].Fill(nVtx,hits30to50)
     hpdInformation["rechitoccupancy"]["overall"]["rechits50_vs_nvtx"].Fill(nVtx,hits50)
 
     #for be in ["Barrel","Endcap"]:
     hits   = hpdInformation["rechitoccupancy"][0]["rechits"]   + hpdInformation["rechitoccupancy"][1]["rechits"]  
+    hitsto15 = hpdInformation["rechitoccupancy"][0]["rechitsto15"] + hpdInformation["rechitoccupancy"][1]["rechitsto15"]
     hits15 = hpdInformation["rechitoccupancy"][0]["rechits15"] + hpdInformation["rechitoccupancy"][1]["rechits15"]
+    hits15to30 = hpdInformation["rechitoccupancy"][0]["rechits15to30"] + hpdInformation["rechitoccupancy"][1]["rechits15to30"]
     hits30 = hpdInformation["rechitoccupancy"][0]["rechits30"] + hpdInformation["rechitoccupancy"][1]["rechits30"]
+    hits30to50 = hpdInformation["rechitoccupancy"][0]["rechits30to50"] + hpdInformation["rechitoccupancy"][1]["rechits30to50"]
     hits50 = hpdInformation["rechitoccupancy"][0]["rechits50"] + hpdInformation["rechitoccupancy"][1]["rechits50"]
     # hits   = hpdInformation["rechitoccupancy"][be]["rechits"] 
     # hits15 = hpdInformation["rechitoccupancy"][be]["rechits15"]
@@ -777,34 +1035,49 @@ def fill_hpd_histograms(hpdInformation,nVtx):
     # hits50 = hpdInformation["rechitoccupancy"][be]["rechits50"]
     
     hpdInformation["rechitoccupancy"]["Barrel"]["rechits_vs_nvtx"]  .Fill(nVtx,hits)
+    hpdInformation["rechitoccupancy"]["Barrel"]["rechitsto15_vs_nvtx"].Fill(nVtx,hitsto15)
     hpdInformation["rechitoccupancy"]["Barrel"]["rechits15_vs_nvtx"].Fill(nVtx,hits15)
+    hpdInformation["rechitoccupancy"]["Barrel"]["rechits15to30_vs_nvtx"].Fill(nVtx,hits15to30)
     hpdInformation["rechitoccupancy"]["Barrel"]["rechits30_vs_nvtx"].Fill(nVtx,hits30)
+    hpdInformation["rechitoccupancy"]["Barrel"]["rechits30to50_vs_nvtx"].Fill(nVtx,hits30to50)
     hpdInformation["rechitoccupancy"]["Barrel"]["rechits50_vs_nvtx"].Fill(nVtx,hits50)
 
-    hits   = hpdInformation["rechitoccupancy"][2]["rechits"]   + hpdInformation["rechitoccupancy"][3]["rechits"]  
-    hits15 = hpdInformation["rechitoccupancy"][2]["rechits15"] + hpdInformation["rechitoccupancy"][3]["rechits15"]
-    hits30 = hpdInformation["rechitoccupancy"][2]["rechits30"] + hpdInformation["rechitoccupancy"][3]["rechits30"]
-    hits50 = hpdInformation["rechitoccupancy"][2]["rechits50"] + hpdInformation["rechitoccupancy"][3]["rechits50"]
+    hits       = hpdInformation["rechitoccupancy"][2]["rechits"]   + hpdInformation["rechitoccupancy"][3]["rechits"]  
+    hitsto15   = hpdInformation["rechitoccupancy"][2]["rechitsto15"] + hpdInformation["rechitoccupancy"][3]["rechitsto15"]
+    hits15     = hpdInformation["rechitoccupancy"][2]["rechits15"] + hpdInformation["rechitoccupancy"][3]["rechits15"]
+    hits15to30 = hpdInformation["rechitoccupancy"][2]["rechits15to30"] + hpdInformation["rechitoccupancy"][3]["rechits15to30"]
+    hits30     = hpdInformation["rechitoccupancy"][2]["rechits30"] + hpdInformation["rechitoccupancy"][3]["rechits30"]
+    hits30to50 = hpdInformation["rechitoccupancy"][2]["rechits30to50"] + hpdInformation["rechitoccupancy"][3]["rechits30to50"]
+    hits50     = hpdInformation["rechitoccupancy"][2]["rechits50"] + hpdInformation["rechitoccupancy"][3]["rechits50"]
     # hits   = hpdInformation["rechitoccupancy"][be]["rechits"] 
     # hits15 = hpdInformation["rechitoccupancy"][be]["rechits15"]
     # hits30 = hpdInformation["rechitoccupancy"][be]["rechits30"]
     # hits50 = hpdInformation["rechitoccupancy"][be]["rechits50"]
 
     hpdInformation["rechitoccupancy"]["Endcap"]["rechits_vs_nvtx"]  .Fill(nVtx,hits)
+    hpdInformation["rechitoccupancy"]["Endcap"]["rechitsto15_vs_nvtx"].Fill(nVtx,hitsto15)
     hpdInformation["rechitoccupancy"]["Endcap"]["rechits15_vs_nvtx"].Fill(nVtx,hits15)
+    hpdInformation["rechitoccupancy"]["Endcap"]["rechits15to30_vs_nvtx"].Fill(nVtx,hits15to30)
     hpdInformation["rechitoccupancy"]["Endcap"]["rechits30_vs_nvtx"].Fill(nVtx,hits30)
+    hpdInformation["rechitoccupancy"]["Endcap"]["rechits30to50_vs_nvtx"].Fill(nVtx,hits30to50)
     hpdInformation["rechitoccupancy"]["Endcap"]["rechits50_vs_nvtx"].Fill(nVtx,hits50)
 
     for ieta in range(29):
-        allPlusHits   = 0
-        allPlusHits15 = 0
-        allPlusHits30 = 0
-        allPlusHits50 = 0
+        allPlusHits       = 0
+        allPlusHitsto15   = 0
+        allPlusHits15     = 0
+        allPlusHits15to30 = 0
+        allPlusHits30     = 0
+        allPlusHits30to50 = 0
+        allPlusHits50     = 0
 
-        allMinusHits   = 0
-        allMinusHits15 = 0
-        allMinusHits30 = 0
-        allMinusHits50 = 0
+        allMinusHits       = 0
+        allMinusHitsto15   = 0
+        allMinusHits15     = 0
+        allMinusHits15to30 = 0
+        allMinusHits30     = 0
+        allMinusHits30to50 = 0
+        allMinusHits50     = 0
         
         theEta = ieta + 1
         for depth in range(3):
@@ -826,80 +1099,128 @@ def fill_hpd_histograms(hpdInformation,nVtx):
             # iEta 16,27,28 have max depth==3
 
             hits   = hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_d%d"%(ieta+1,depth+1)] 
+            hitsto15 = hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d"%(ieta+1,depth+1)]
             hits15 = hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_d%d"%(ieta+1,depth+1)]
+            hits15to30 = hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d"%(ieta+1,depth+1)]
             hits30 = hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_d%d"%(ieta+1,depth+1)]
+            hits30to50 = hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d"%(ieta+1,depth+1)]
             hits50 = hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_d%d"%(ieta+1,depth+1)]
 
-            allPlusHits   = allPlusHits   + hits
-            allPlusHits15 = allPlusHits15 + hits15
-            allPlusHits30 = allPlusHits30 + hits30
-            allPlusHits50 = allPlusHits50 + hits50
+            allPlusHits       = allPlusHits   + hits
+            allPlusHitsto15   = allPlusHitsto15 + hitsto15
+            allPlusHits15     = allPlusHits15 + hits15
+            allPlusHits15to30 = allPlusHits15to30 + hits15to30
+            allPlusHits30     = allPlusHits30 + hits30
+            allPlusHits30to50 = allPlusHits30to50 + hits30to50
+            allPlusHits50     = allPlusHits50 + hits50
 
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)]  .Fill(nVtx,hits)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hitsto15)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits15)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits15to30)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits30)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits30to50)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits50)
             
-            hits   = hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d"%(ieta+1,depth+1)] 
-            hits15 = hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d"%(ieta+1,depth+1)]
-            hits30 = hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d"%(ieta+1,depth+1)]
-            hits50 = hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits       = hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d"%(ieta+1,depth+1)] 
+            hitsto15   = hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits15     = hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits15to30 = hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits30     = hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits30to50 = hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits50     = hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d"%(ieta+1,depth+1)]
 
-            allMinusHits   = allMinusHits   + hits
-            allMinusHits15 = allMinusHits15 + hits15
-            allMinusHits30 = allMinusHits30 + hits30
-            allMinusHits50 = allMinusHits50 + hits50
+            allMinusHits       = allMinusHits   + hits
+            allMinusHitsto15   = allMinusHitsto15 + hitsto15
+            allMinusHits15     = allMinusHits15 + hits15
+            allMinusHits15to30 = allMinusHits15to30 + hits15to30
+            allMinusHits30     = allMinusHits30 + hits30
+            allMinusHits30to50 = allMinusHits30to50 + hits30to50
+            allMinusHits50     = allMinusHits50 + hits50
 
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)]  .Fill(nVtx,hits)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hitsto15)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits15)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits15to30)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits30)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits30to50)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits50)
             
-            hits   = hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_d%d"%(ieta+1,depth+1)]   + hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d"%(ieta+1,depth+1)] 
-            hits15 = hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_d%d"%(ieta+1,depth+1)] + hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d"%(ieta+1,depth+1)]
-            hits30 = hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_d%d"%(ieta+1,depth+1)] + hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d"%(ieta+1,depth+1)]
-            hits50 = hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_d%d"%(ieta+1,depth+1)] + hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits       = hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_d%d"%(ieta+1,depth+1)]   + hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d"%(ieta+1,depth+1)] 
+            hitsto15   = hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d"%(ieta+1,depth+1)] + hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits15     = hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_d%d"%(ieta+1,depth+1)] + hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits15to30 = hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d"%(ieta+1,depth+1)] + hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits30     = hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_d%d"%(ieta+1,depth+1)] + hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits30to50 = hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d"%(ieta+1,depth+1)] + hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d"%(ieta+1,depth+1)]
+            hits50     = hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_d%d"%(ieta+1,depth+1)] + hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d"%(ieta+1,depth+1)]
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)]  .Fill(nVtx,hits)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hitsto15)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits15)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits15to30)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits30)
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits30to50)
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Fill(nVtx,hits50)
 
         # three depth sum
-        hits   = allPlusHits
-        hits15 = allPlusHits15
-        hits30 = allPlusHits30
-        hits50 = allPlusHits50
+        hits       = allPlusHits
+        hitsto15   = allPlusHitsto15
+        hits15     = allPlusHits15
+        hits15to30 = allPlusHits15to30
+        hits30     = allPlusHits30
+        hits30to50 = allPlusHits30to50
+        hits50     = allPlusHits50
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_vs_nvtx"%(ieta+1)]  .Fill(nVtx,hits)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_vs_nvtx"%(ieta+1)].Fill(nVtx,hitsto15)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_vs_nvtx"%(ieta+1)].Fill(nVtx,hits15)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_vs_nvtx"%(ieta+1)].Fill(nVtx,hits15to30)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_vs_nvtx"%(ieta+1)].Fill(nVtx,hits30)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_vs_nvtx"%(ieta+1)].Fill(nVtx,hits30to50)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_vs_nvtx"%(ieta+1)].Fill(nVtx,hits50)
         
-        hits   = allMinusHits
-        hits15 = allMinusHits15
-        hits30 = allMinusHits30
-        hits50 = allMinusHits50
+        hits       = allMinusHits
+        hitsto15   = allMinusHitsto15
+        hits15     = allMinusHits15
+        hits15to30 = allMinusHits15to30
+        hits30     = allMinusHits30
+        hits30to50 = allMinusHits30to50
+        hits50     = allMinusHits50
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_vs_nvtx"%(ieta+1)]  .Fill(nVtx,hits)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_vs_nvtx"%(ieta+1)].Fill(nVtx,hitsto15)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_vs_nvtx"%(ieta+1)].Fill(nVtx,hits15)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_vs_nvtx"%(ieta+1)].Fill(nVtx,hits15to30)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_vs_nvtx"%(ieta+1)].Fill(nVtx,hits30)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_vs_nvtx"%(ieta+1)].Fill(nVtx,hits30to50)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_vs_nvtx"%(ieta+1)].Fill(nVtx,hits50)
         
-        hits   = allPlusHits   + allMinusHits
-        hits15 = allPlusHits15 + allMinusHits15
-        hits30 = allPlusHits30 + allMinusHits30
-        hits50 = allPlusHits50 + allMinusHits50
+        hits       = allPlusHits   + allMinusHits
+        hitsto15   = allPlusHitsto15 + allMinusHitsto15
+        hits15     = allPlusHits15 + allMinusHits15
+        hits15to30 = allPlusHits15to30 + allMinusHits15to30
+        hits30     = allPlusHits30 + allMinusHits30
+        hits30to50 = allPlusHits30to50 + allMinusHits30to50
+        hits50     = allPlusHits50 + allMinusHits50
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%d_vs_nvtx"%(ieta+1)]  .Fill(nVtx,hits)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%d_vs_nvtx"%(ieta+1)].Fill(nVtx,hitsto15)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%d_vs_nvtx"%(ieta+1)].Fill(nVtx,hits15)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%d_vs_nvtx"%(ieta+1)].Fill(nVtx,hits15to30)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%d_vs_nvtx"%(ieta+1)].Fill(nVtx,hits30)
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%d_vs_nvtx"%(ieta+1)].Fill(nVtx,hits30to50)
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%d_vs_nvtx"%(ieta+1)].Fill(nVtx,hits50)
 
     for subdetIdx in range(4):
-        hits   = hpdInformation["rechitoccupancy"][subdetIdx]["rechits"] 
-        hits15 = hpdInformation["rechitoccupancy"][subdetIdx]["rechits15"]
-        hits30 = hpdInformation["rechitoccupancy"][subdetIdx]["rechits30"]
-        hits50 = hpdInformation["rechitoccupancy"][subdetIdx]["rechits50"]
+        hits       = hpdInformation["rechitoccupancy"][subdetIdx]["rechits"] 
+        hitsto15   = hpdInformation["rechitoccupancy"][subdetIdx]["rechitsto15"]
+        hits15     = hpdInformation["rechitoccupancy"][subdetIdx]["rechits15"]
+        hits15to30 = hpdInformation["rechitoccupancy"][subdetIdx]["rechits15to30"]
+        hits30     = hpdInformation["rechitoccupancy"][subdetIdx]["rechits30"]
+        hits30to50 = hpdInformation["rechitoccupancy"][subdetIdx]["rechits30to50"]
+        hits50     = hpdInformation["rechitoccupancy"][subdetIdx]["rechits50"]
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits_vs_nvtx"]  .Fill(nVtx,hits)
+        hpdInformation["rechitoccupancy"][subdetIdx]["rechitsto15_vs_nvtx"].Fill(nVtx,hitsto15)
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits15_vs_nvtx"].Fill(nVtx,hits15)
+        hpdInformation["rechitoccupancy"][subdetIdx]["rechits15to30_vs_nvtx"].Fill(nVtx,hits15to30)
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits30_vs_nvtx"].Fill(nVtx,hits30)
+        hpdInformation["rechitoccupancy"][subdetIdx]["rechits30to50_vs_nvtx"].Fill(nVtx,hits30to50)
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits50_vs_nvtx"].Fill(nVtx,hits50)
 
     #for keyName in hpdNames:
@@ -913,37 +1234,55 @@ def fill_hpd_histograms(hpdInformation,nVtx):
     ##hpdInformation[keyName+"_HPD%d"%(hpd)]["hits30"] = 0
     ##hpdInformation[keyName+"_HPD%d"%(hpd)]["hits50"] = 0
     for hpdIndex in range(288):
-        hits   = hpdInformation[hpdIndex]["hits"]  
-        hits15 = hpdInformation[hpdIndex]["hits15"]
-        hits30 = hpdInformation[hpdIndex]["hits30"]
-        hits50 = hpdInformation[hpdIndex]["hits50"]
+        hits       = hpdInformation[hpdIndex]["hits"]  
+        hitsto15   = hpdInformation[hpdIndex]["hitsto15"]
+        hits15     = hpdInformation[hpdIndex]["hits15"]
+        hits15to30 = hpdInformation[hpdIndex]["hits15to30"]
+        hits30     = hpdInformation[hpdIndex]["hits30"]
+        hits30to50 = hpdInformation[hpdIndex]["hits30to50"]
+        hits50     = hpdInformation[hpdIndex]["hits50"]
 
         hpdInformation[hpdIndex]["hits_vs_nvtx"]  .Fill(nVtx,hits  )
+        hpdInformation[hpdIndex]["hitsto15_vs_nvtx"].Fill(nVtx,hitsto15)
         hpdInformation[hpdIndex]["hits15_vs_nvtx"].Fill(nVtx,hits15)
+        hpdInformation[hpdIndex]["hits15to30_vs_nvtx"].Fill(nVtx,hits15to30)
         hpdInformation[hpdIndex]["hits30_vs_nvtx"].Fill(nVtx,hits30)
+        hpdInformation[hpdIndex]["hits30to50_vs_nvtx"].Fill(nVtx,hits30to50)
         hpdInformation[hpdIndex]["hits50_vs_nvtx"].Fill(nVtx,hits50)
 
         #print hpdIndex, nVtx, hits, hits15, hits30, hits50
  
         if hpdIndex < 72:
             hpdInformation["summary"][0]["hits_vs_nvtx"]  .Fill(nVtx,hits  )
+            hpdInformation["summary"][0]["hitsto15_vs_nvtx"].Fill(nVtx,hitsto15)
             hpdInformation["summary"][0]["hits15_vs_nvtx"].Fill(nVtx,hits15)
+            hpdInformation["summary"][0]["hits15to30_vs_nvtx"].Fill(nVtx,hits15to30)
             hpdInformation["summary"][0]["hits30_vs_nvtx"].Fill(nVtx,hits30)
+            hpdInformation["summary"][0]["hits30to50_vs_nvtx"].Fill(nVtx,hits30to50)
             hpdInformation["summary"][0]["hits50_vs_nvtx"].Fill(nVtx,hits50)
         elif hpdIndex < 144:
             hpdInformation["summary"][1]["hits_vs_nvtx"]  .Fill(nVtx,hits  )
+            hpdInformation["summary"][1]["hitsto15_vs_nvtx"].Fill(nVtx,hitsto15)
             hpdInformation["summary"][1]["hits15_vs_nvtx"].Fill(nVtx,hits15)
+            hpdInformation["summary"][1]["hits15to30_vs_nvtx"].Fill(nVtx,hits15to30)
             hpdInformation["summary"][1]["hits30_vs_nvtx"].Fill(nVtx,hits30)
+            hpdInformation["summary"][1]["hits30to50_vs_nvtx"].Fill(nVtx,hits30to50)
             hpdInformation["summary"][1]["hits50_vs_nvtx"].Fill(nVtx,hits50)
         elif hpdIndex < 216:
             hpdInformation["summary"][2]["hits_vs_nvtx"]  .Fill(nVtx,hits  )
+            hpdInformation["summary"][2]["hitsto15_vs_nvtx"].Fill(nVtx,hitsto15)
             hpdInformation["summary"][2]["hits15_vs_nvtx"].Fill(nVtx,hits15)
+            hpdInformation["summary"][2]["hits15to30_vs_nvtx"].Fill(nVtx,hits15to30)
             hpdInformation["summary"][2]["hits30_vs_nvtx"].Fill(nVtx,hits30)
+            hpdInformation["summary"][2]["hits30to50_vs_nvtx"].Fill(nVtx,hits30to50)
             hpdInformation["summary"][2]["hits50_vs_nvtx"].Fill(nVtx,hits50)
         else:
             hpdInformation["summary"][3]["hits_vs_nvtx"]  .Fill(nVtx,hits  )
+            hpdInformation["summary"][3]["hitsto15_vs_nvtx"].Fill(nVtx,hitsto15)
             hpdInformation["summary"][3]["hits15_vs_nvtx"].Fill(nVtx,hits15)
+            hpdInformation["summary"][3]["hits15to30_vs_nvtx"].Fill(nVtx,hits15to30)
             hpdInformation["summary"][3]["hits30_vs_nvtx"].Fill(nVtx,hits30)
+            hpdInformation["summary"][3]["hits30to50_vs_nvtx"].Fill(nVtx,hits30to50)
             hpdInformation["summary"][3]["hits50_vs_nvtx"].Fill(nVtx,hits50)
 
 
@@ -955,16 +1294,22 @@ def write_hpd_histograms(hpdInformation,myFile):
     rechitDir = myFile.Get("rechitoccupancy")
     rechitDir.cd()
     hpdInformation["rechitoccupancy"]["overall"]["rechits_vs_nvtx"]  .Write()
+    hpdInformation["rechitoccupancy"]["overall"]["rechitsto15_vs_nvtx"].Write()
     hpdInformation["rechitoccupancy"]["overall"]["rechits15_vs_nvtx"].Write()
+    hpdInformation["rechitoccupancy"]["overall"]["rechits15to30_vs_nvtx"].Write()
     hpdInformation["rechitoccupancy"]["overall"]["rechits30_vs_nvtx"].Write()
+    hpdInformation["rechitoccupancy"]["overall"]["rechits30to50_vs_nvtx"].Write()
     hpdInformation["rechitoccupancy"]["overall"]["rechits50_vs_nvtx"].Write()
 
     for be in ["Barrel","Endcap"]:
         outputDir = rechitDir.Get(be)
         outputDir.cd()
         hpdInformation["rechitoccupancy"][be]["rechits_vs_nvtx"]  .Write()
+        hpdInformation["rechitoccupancy"][be]["rechitsto15_vs_nvtx"].Write()
         hpdInformation["rechitoccupancy"][be]["rechits15_vs_nvtx"].Write()
+        hpdInformation["rechitoccupancy"][be]["rechits15to30_vs_nvtx"].Write()
         hpdInformation["rechitoccupancy"][be]["rechits30_vs_nvtx"].Write()
+        hpdInformation["rechitoccupancy"][be]["rechits30to50_vs_nvtx"].Write()
         hpdInformation["rechitoccupancy"][be]["rechits50_vs_nvtx"].Write()
 
     etaDir = rechitDir.Get("etahists")
@@ -991,55 +1336,82 @@ def write_hpd_histograms(hpdInformation,myFile):
 
             etaDir.cd()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)]  .Write()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)]  .Write()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             
             hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)]  .Write()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%d_d%d_vs_nvtx"%(ieta+1,depth+1)].Write()
 
             energyDir.cd()
             hpdInformation["rechitenergy"]["rechits_energy_ieta%dp_d%d"%(ieta+1,depth+1)]  .Write()
+            hpdInformation["rechitenergy"]["rechitsto15_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitenergy"]["rechits15_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitenergy"]["rechits15to30_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitenergy"]["rechits30_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitenergy"]["rechits30to50_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitenergy"]["rechits50_energy_ieta%dp_d%d"%(ieta+1,depth+1)].Write()
             
             hpdInformation["rechitenergy"]["rechits_energy_ieta%dm_d%d"%(ieta+1,depth+1)]  .Write()
+            hpdInformation["rechitenergy"]["rechitsto15_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitenergy"]["rechits15_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitenergy"]["rechits15to30_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitenergy"]["rechits30_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Write()
+            hpdInformation["rechitenergy"]["rechits30to50_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Write()
             hpdInformation["rechitenergy"]["rechits50_energy_ieta%dm_d%d"%(ieta+1,depth+1)].Write()
             
 
         # cumulative depths
         etaDir.cd()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dp_vs_nvtx"%(ieta+1)]  .Write()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dp_vs_nvtx"%(ieta+1)].Write()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dp_vs_nvtx"%(ieta+1)].Write()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dp_vs_nvtx"%(ieta+1)].Write()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dp_vs_nvtx"%(ieta+1)].Write()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dp_vs_nvtx"%(ieta+1)].Write()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dp_vs_nvtx"%(ieta+1)].Write()
 
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%dm_vs_nvtx"%(ieta+1)]  .Write()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%dm_vs_nvtx"%(ieta+1)].Write()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%dm_vs_nvtx"%(ieta+1)].Write()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%dm_vs_nvtx"%(ieta+1)].Write()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%dm_vs_nvtx"%(ieta+1)].Write()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%dm_vs_nvtx"%(ieta+1)].Write()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%dm_vs_nvtx"%(ieta+1)].Write()
 
         hpdInformation["rechitoccupancy"]["etahists"]["rechits_ieta%d_vs_nvtx"%(ieta+1)]  .Write()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechitsto15_ieta%d_vs_nvtx"%(ieta+1)].Write()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits15_ieta%d_vs_nvtx"%(ieta+1)].Write()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits15to30_ieta%d_vs_nvtx"%(ieta+1)].Write()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits30_ieta%d_vs_nvtx"%(ieta+1)].Write()
+        hpdInformation["rechitoccupancy"]["etahists"]["rechits30to50_ieta%d_vs_nvtx"%(ieta+1)].Write()
         hpdInformation["rechitoccupancy"]["etahists"]["rechits50_ieta%d_vs_nvtx"%(ieta+1)].Write()
 
     subdetDir = rechitDir.Get("subdetectors")
     subdetDir.cd()
     for subdetIdx in range(4):
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits_vs_nvtx"]  .Write()
+        hpdInformation["rechitoccupancy"][subdetIdx]["rechitsto15_vs_nvtx"].Write()
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits15_vs_nvtx"].Write()
+        hpdInformation["rechitoccupancy"][subdetIdx]["rechits15to30_vs_nvtx"].Write()
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits30_vs_nvtx"].Write()
+        hpdInformation["rechitoccupancy"][subdetIdx]["rechits30to50_vs_nvtx"].Write()
         hpdInformation["rechitoccupancy"][subdetIdx]["rechits50_vs_nvtx"].Write()
     #for keyName in hpdNames:
     ##for be in ["B","E"]:
@@ -1056,16 +1428,22 @@ def write_hpd_histograms(hpdInformation,myFile):
     myFile.cd("hpdInformation")
     for hpdIndex in range(288):
         hpdInformation[hpdIndex]["hits_vs_nvtx"]  .Write()
+        hpdInformation[hpdIndex]["hitsto15_vs_nvtx"].Write()
         hpdInformation[hpdIndex]["hits15_vs_nvtx"].Write()
+        hpdInformation[hpdIndex]["hits15to30_vs_nvtx"].Write()
         hpdInformation[hpdIndex]["hits30_vs_nvtx"].Write()
+        hpdInformation[hpdIndex]["hits30to50_vs_nvtx"].Write()
         hpdInformation[hpdIndex]["hits50_vs_nvtx"].Write()
 
     #myFile.cd("hpdInformation")
     for subdetIndex in range(4):
         #hpdDir.cd()
         hpdInformation["summary"][subdetIndex]["hits_vs_nvtx"]  .Write()
+        hpdInformation["summary"][subdetIndex]["hitsto15_vs_nvtx"].Write()
         hpdInformation["summary"][subdetIndex]["hits15_vs_nvtx"].Write()
+        hpdInformation["summary"][subdetIndex]["hits15to30_vs_nvtx"].Write()
         hpdInformation["summary"][subdetIndex]["hits30_vs_nvtx"].Write()
+        hpdInformation["summary"][subdetIndex]["hits30to50_vs_nvtx"].Write()
         hpdInformation["summary"][subdetIndex]["hits50_vs_nvtx"].Write()
 
     myFile.Write()

@@ -24,7 +24,7 @@ def main():
     rootFile = r.TFile("%s_hpdInformation.root"%(sample),"READ")
     myDay = datetime.date.today()
     mkdir_p("%s"%(myDay))
-    outRootFile = r.TFile("%s/%s_nvtx%d_hpdPredictions.root"%(myDay,sample,options.nVtx),"RECREATE")
+    outRootFile = r.TFile("%s_V2/%s_nvtx%d_hpdPredictions.root"%(myDay,sample,options.nVtx),"RECREATE")
 
     for hits in ["","15","30","50"]:
         hpdHBHitsActual = rootFile.Get(  "hpdInformation/hits%s_vs_nvtx_HBP"%(hits))
@@ -75,9 +75,13 @@ def main():
                 if etaOccupancyHist:
                     if options.debug:
                         print depth+1,ieta,options.nVtx
-                    outEtaHist = printIEtaInfoVsNVTX(etaOccupancyHist,nPhiChannels,options.debug)
+                    outEtaHist = printIEtaInfoVsNVTX(etaOccupancyHist,nPhiChannels,
+                                                     "%s%d"%(hits,(depth+1)*100+(etaval+1)),
+                                                     options.debug)
                     if options.debug and ieta==28:
-                        outEtaHist = printIEtaInfoVsNVTX(etaOccupancyHist,nPhiChannels,True)
+                        outEtaHist = printIEtaInfoVsNVTX(etaOccupancyHist,nPhiChannels,
+                                                         "%s%d"%(hits,(depth+1)*100+(etaval+1)),
+                                                         True)
 
                     for nVtx in range(50):
                         probabilities["nVtx%d"%(nVtx)]["d%d"%(depth+1)]["ieta%d"%(ieta)] = outEtaHist.GetBinContent(outEtaHist.FindBin(nVtx))
@@ -90,67 +94,70 @@ def main():
                     outEtaHist.Draw("p0")
                     r.gPad.SetLogy(1)
                 
-            etacanvas.SaveAs("%s/%s_hits%s_ietad%dHitProbability.png"%(myDay,sample,hits,depth+1))
-            etacanvas.SaveAs("%s/%s_hits%s_ietad%dHitProbability.pdf"%(myDay,sample,hits,depth+1))
+            etacanvas.SaveAs("%s_V2/%s_hits%s_ietad%dHitProbability.png"%(myDay,sample,hits,depth+1))
+            etacanvas.SaveAs("%s_V2/%s_hits%s_ietad%dHitProbability.pdf"%(myDay,sample,hits,depth+1))
             if options.debug:
                 print probabilities
                 sys.stdout.flush()
-#############Timing code###########
-#    i = 0
-#    decade  = 0
-#    century = 0
-#    tsw = r.TStopwatch()
-#    tenpcount = 1
-#    onepcount = 1
-#    nTrials = 100000
-#    sys.stdout.flush()
-#        if ( i==0):
-#            tsw.Start()
-#            # print('.', end='')
-#            sys.stdout.write('.')
-#            sys.stdout.flush()
-#        if ((i*10)/(nTrials*50) == tenpcount ) :
-#            tsw.Stop()
-#            time = tsw.RealTime()
-#            tsw.Start(r.kFALSE)
-#            finTime = 0.
-#            frac = (i*1.0)/(nTrials*50*1.0)
-#            if (frac>0):
-#                finTime = time / frac - time
-#                finMin = finTime / 60.
-#                sys.stdout.write("%d%% done.  "%(tenpcount*10))
-#                # sys.stdout.write("t=7.2f"%(time))
-#                sys.stdout.write("t="+str(time))
-#                sys.stdout.write(" projected finish=%7d s("%(finTime))
-#                sys.stdout.write("%2.2f min).   "%(finMin))
-#                sys.stdout.write("\n")
-#                sys.stdout.flush()
-#                tenpcount = tenpcount + 1
-#                
-#        elif ( (i*100)/(nTrials*50) == onepcount ) :
-#            # print('.', end='')
-#            sys.stdout.write('.')
-#            sys.stdout.flush()
-#            onepcount = onepcount + 1
-#
-#        i = i + 1
-        #print nVtx
-        #print probabilities["nVtx%d"%(nVtx)]["d1"]
-        #print probabilities["nVtx%d"%(nVtx)]["d2"]
-        #print probabilities["nVtx%d"%(nVtx)]["d3"]
+        #############Timing code###########
+        i = 0
+        decade  = 0
+        century = 0
+        tsw = r.TStopwatch()
+        tenpcount = 1
+        onepcount = 1
+        sys.stdout.flush()
         nVtx = options.nVtx
-        hbVals =  countHPDCounts(probabilities["nVtx%d"%(nVtx)],15,True,1 ,options.nevents,False)
-        he0Vals = countHPDCounts(probabilities["nVtx%d"%(nVtx)],15,False,0,options.nevents,False)
-        he1Vals = countHPDCounts(probabilities["nVtx%d"%(nVtx)],15,False,1,options.nevents,False)
+        probs = probabilities["nVtx%d"%(nVtx)]
+        nTrials = int(options.nevents*probs["weight"])
+        for trial in range(nTrials):
+            if ( i==0):
+                tsw.Start()
+                # print('.', end='')
+                sys.stdout.write('.')
+                sys.stdout.flush()
+            if ((i*10)/(nTrials) == tenpcount ) :
+                tsw.Stop()
+                time = tsw.RealTime()
+                tsw.Start(r.kFALSE)
+                finTime = 0.
+                frac = (i*1.0)/(nTrials*1.0)
+                if (frac>0):
+                    finTime = time / frac - time
+                    finMin = finTime / 60.
+                    sys.stdout.write("%d%% done.  "%(tenpcount*10))
+                    # sys.stdout.write("t=7.2f"%(time))
+                    sys.stdout.write("t="+str(time))
+                    sys.stdout.write(" projected finish=%7d s("%(finTime))
+                    sys.stdout.write("%2.2f min).   "%(finMin))
+                    sys.stdout.write("\n")
+                    sys.stdout.flush()
+                    tenpcount = tenpcount + 1
+                    
+            elif ( (i*100)/(nTrials) == onepcount ) :
+                # print('.', end='')
+                sys.stdout.write('.')
+                sys.stdout.flush()
+                onepcount = onepcount + 1
+                
+            i = i + 1
+            # print nVtx
+            # print probabilities["nVtx%d"%(nVtx)]["d1"]
+            # print probabilities["nVtx%d"%(nVtx)]["d2"]
+            # print probabilities["nVtx%d"%(nVtx)]["d3"]
+            hbVal  = countHPDCounts(probs,True,1 ,False)
+            he0Val = countHPDCounts(probs,False,0,False)
+            he1Val = countHPDCounts(probs,False,1,False)
         
-        outRootFile.cd()
-        for hbVal,he0Val,he1Val in izip(hbVals,he0Vals,he1Vals):
+            outRootFile.cd()
+            #for hbVal,he0Val,he1Val in izip(hbVals,he0Vals,he1Vals):
             hpdHB .Fill(nVtx+0.5,hbVal)
             hpdHE0.Fill(nVtx+0.5,he0Val)
             hpdHE1.Fill(nVtx+0.5,he1Val)
             hpdHE .Fill(nVtx+0.5,he0Val)
             hpdHE .Fill(nVtx+0.5,he1Val)
-            
+        ############### done with the loop
+
         newCanvas.cd(1)
         r.gPad.SetLogz(1)
         hpdHB .Draw("colz")
@@ -166,8 +173,8 @@ def main():
         r.gPad.SetLogz(1)
         hpdHEHitsActual.Draw("colz")
         #hpdHE1.Draw("colz")
-        newCanvas.SaveAs("%s/%s_hits%s_hpdPredictedOccupancy.png"%(myDay,sample,hits))
-        newCanvas.SaveAs("%s/%s_hits%s_hpdPredictedOccupancy.pdf"%(myDay,sample,hits))
+        newCanvas.SaveAs("%s_V2/%s_hits%s_hpdPredictedOccupancy.png"%(myDay,sample,hits))
+        newCanvas.SaveAs("%s_V2/%s_hits%s_hpdPredictedOccupancy.pdf"%(myDay,sample,hits))
         
         hpdHB.Write()
         hpdHE0.Write()
@@ -195,7 +202,7 @@ def mkdir_p(path):
             pass
         else: raise
 ################
-def countHPDCounts(probs,threshold,barrel,hpdType,nevents,useBinomial):
+def countHPDCounts(probs,barrel,hpdType,useBinomial):
     r.gROOT.SetBatch(True)
     #hitsInEta = 
     odd = True
@@ -233,10 +240,11 @@ def countHPDCounts(probs,threshold,barrel,hpdType,nevents,useBinomial):
         #loop over ieta 16,27,28 depth 3
         #count the number of hits above threshold
     #print channels
-    nTrials = int(nevents*probs["weight"])
-    hitCounts = numpy.ndarray((nTrials,),int)
-    for trial in range(nTrials):
-        hitCounts[trial] = 0
+    ##nTrials = int(nevents*probs["weight"])
+    ##hitCounts = numpy.ndarray((nTrials,),int)
+    ##for trial in range(nTrials):
+    ##    hitCounts[trial] = 0
+    hitCounts = 0
     for depth in depths:
         for eta in channels[depth]["etas"]:
             probability = probs[depth]["ieta%d"%(eta)]
@@ -245,11 +253,11 @@ def countHPDCounts(probs,threshold,barrel,hpdType,nevents,useBinomial):
                 for trial in range(nTrials):
                     isHitBin   = numpy.random.binomial(1,probability)
                     if isHitBin:
-                        hitCounts[trial] += hit
+                        hitCounts += hit
             else:
-                isHitPoiss = numpy.random.poisson(probability,nTrials)
-                for trial,hit in enumerate(isHitPoiss):
-                    hitCounts[trial] += hit 
+                isHitPoiss = numpy.random.poisson(probability,1)
+                if isHitPoiss[0]:
+                    hitCounts += isHitPoiss[0]
     return hitCounts
 #############    
 
@@ -261,12 +269,12 @@ def countHBHPDCounts(threshold):
     return hitCounts
 #############    
 
-def printIEtaInfoVsNVTX(histo,nPhiChannels,debug):
+def printIEtaInfoVsNVTX(histo,nPhiChannels,jobNum,debug):
     r.gROOT.SetBatch(True)
     nBinsX = histo.GetNbinsX()
     nBinsY = histo.GetNbinsY()
-    probHisto = r.TH1D("probHisto","probHisto",nBinsX,-0.5,nBinsX-0.5)
-    hitHisto  = r.TH1D("hitHisto","hitHisto",nBinsX,-0.5,nBinsX-0.5)
+    probHisto = r.TH1D("probHisto_%s"%(jobNum),"probHisto_%s"%(jobNum),nBinsX,-0.5,nBinsX-0.5)
+    hitHisto  = r.TH1D("hitHisto_%s"%(jobNum),"hitHisto_%s"%(jobNum),nBinsX,-0.5,nBinsX-0.5)
     for xBin in range(nBinsX):
         nVtx = xBin
         totalHitCounts = 0

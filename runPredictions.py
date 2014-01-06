@@ -23,8 +23,8 @@ def main():
 
     rootFile = r.TFile("%s_hpdInformation.root"%(sample),"READ")
     myDay = datetime.date.today()
-    mkdir_p("%s"%(myDay))
-    outRootFile = r.TFile("%s_V2/%s_nvtx%d_hpdPredictions.root"%(myDay,sample,options.nVtx),"RECREATE")
+    mkdir_p("%s_V3"%(myDay))
+    outRootFile = r.TFile("%s_V3/%s_nvtx%d_hpdPredictions.root"%(myDay,sample,options.nVtx),"RECREATE")
 
     for hits in ["","15","30","50"]:
         hpdHBHitsActual = rootFile.Get(  "hpdInformation/hits%s_vs_nvtx_HBP"%(hits))
@@ -94,8 +94,8 @@ def main():
                     outEtaHist.Draw("p0")
                     r.gPad.SetLogy(1)
                 
-            etacanvas.SaveAs("%s_V2/%s_hits%s_ietad%dHitProbability.png"%(myDay,sample,hits,depth+1))
-            etacanvas.SaveAs("%s_V2/%s_hits%s_ietad%dHitProbability.pdf"%(myDay,sample,hits,depth+1))
+            etacanvas.SaveAs("%s_V3/%s_hits%s_ietad%dHitProbability.png"%(myDay,sample,hits,depth+1))
+            etacanvas.SaveAs("%s_V3/%s_hits%s_ietad%dHitProbability.pdf"%(myDay,sample,hits,depth+1))
             if options.debug:
                 print probabilities
                 sys.stdout.flush()
@@ -173,8 +173,8 @@ def main():
         r.gPad.SetLogz(1)
         hpdHEHitsActual.Draw("colz")
         #hpdHE1.Draw("colz")
-        newCanvas.SaveAs("%s_V2/%s_hits%s_hpdPredictedOccupancy.png"%(myDay,sample,hits))
-        newCanvas.SaveAs("%s_V2/%s_hits%s_hpdPredictedOccupancy.pdf"%(myDay,sample,hits))
+        newCanvas.SaveAs("%s_V3/%s_hits%s_hpdPredictedOccupancy.png"%(myDay,sample,hits))
+        newCanvas.SaveAs("%s_V3/%s_hits%s_hpdPredictedOccupancy.pdf"%(myDay,sample,hits))
         
         hpdHB.Write()
         hpdHE0.Write()
